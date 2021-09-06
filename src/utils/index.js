@@ -9,11 +9,13 @@ function goodOrBad(input) {
 }
 
 function movieType(input) {
-  const [name, genre, type, year, plot] = input;
+  const [name, type, genre, year, plot] = input;
   console.log(
-    `${name} is a${genre ? ` ${genre}` : ""} ${type ? type : "show"} ${
-      year ? `from ${year}` : ""
-    }${plot ? ` which is about ${plot}` : ""}`
+    input.length >= 2
+      ? `${name} is a${genre ? ` ${genre}` : ""} ${type} ${
+          year ? `from ${year}` : ""
+        }${plot ? ` which is about ${plot}` : ""}`
+      : `incorrect input`
   );
 }
 module.exports = { goodOrBad, movieType };
