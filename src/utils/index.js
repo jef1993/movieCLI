@@ -11,20 +11,32 @@ function goodOrBad(input) {
   }
 }
 
+const readMovie = function (start = 0, end) {
+  const list = JSON.parse(fs.readFileSync("./storage.json"));
+  console.log(list.slice(start, end));
+};
+
 const addMovie = function (name, genre, year) {
   const list = fs.readFileSync("./storage.json");
   const parsedList = JSON.parse(list);
 
-  const updateObj = [
-    parsedList,
-    {
+  if (parsedList)
+    // const updateObj = [
+    //   parsedList,
+    //   {
+    //     name: name,
+    //     genre: genre,
+    //     year: year,
+    //   },
+    // ].flat();
+
+    parsedList.push({
       name: name,
       genre: genre,
       year: year,
-    },
-  ].flat();
+    });
 
-  fs.writeFileSync("./storage.json", JSON.stringify(updateObj));
+  fs.writeFileSync("./storage.json", JSON.stringify(parsedList));
   console.log(JSON.parse(fs.readFileSync("./storage.json")));
 };
 
@@ -40,4 +52,19 @@ function movieType(input) {
   );
 }
 
-module.exports = { goodOrBad, movieType };
+const replaceMovie = function (index, newItem) {
+  const [name, genre, year] = newItem;
+  const list = fs.readFileSync("./storage.json");
+  const parsedList = JSON.parse(list);
+
+  parsedList.splice(index, 1, {
+    name: name,
+    genre: genre,
+    year: year,
+  });
+
+  fs.writeFileSync("./storage.json", JSON.stringify(parsedList));
+  console.log(JSON.parse(fs.readFileSync("./storage.json")));
+};
+
+module.exports = { goodOrBad, movieType, replaceMovie, readMovie };
